@@ -1,0 +1,99 @@
+﻿@using System.Linq
+@using PCconfiguration.Models
+@model PCconfiguration.View_Models.PartsViewModel
+@{
+
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Build Your PC!</h1>
+    <form method="post" id="myForm">
+
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Cases, new SelectList(Model.Cases, "Id", "Name"), "Select Case", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Motherboards, new SelectList(Model.Motherboards, "Id", "Name"), "Select Motherboard", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.GraphicsCards, new SelectList(Model.GraphicsCards, "Id", "Name"), "Select GPU", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Processors, new SelectList(Model.Processors, "Id", "Name"), "Select CPU", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.PowerSupplies, new SelectList(Model.PowerSupplies, "Id", "Name"), "Select PSU", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.HardDrives, new SelectList(Model.HardDrives, "Id", "Name"), "Select a Hard Drive", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Rams, new SelectList(Model.Rams, "Id", "Name"), "Select RAM", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.Coolings, new SelectList(Model.Coolings, "Id", "Name"), "Select a Cooling System", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.CpuCoolings, new SelectList(Model.CpuCoolings, "Id", "Name"), "Select a CPU Cooler", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.CdDvds, new SelectList(Model.CdDvds, "Id", "Name"), "Select Optical Device", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.SoundCards, new SelectList(Model.SoundCards, "Id", "Name"), "Select a Sound Card", new { @class = "form-control" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.DropDownListFor(m => m.OperatingSystems, new SelectList(Model.OperatingSystems, "Id", "Name"), "Select Operating System", new { @class = "form-control" })
+
+        </div>
+
+
+
+        <button id="btnSubmit" type="submit" class="btn btn-primary">Submit</button>
+
+
+
+    </form>
+
+    <div id="resultArea"></div>
+</div>
+
+<script>
+
+    document.getElementById("btnSubmit").addEventListener("click", function (event) {
+
+        event.preventDefault();
+
+        var form = $('#myForm').serialize();
+
+        $.post('@Url.Action("Calculate", "Home")', form)
+            .done(function(response) {
+               $("#resultArea").html("The total price of the selected products is : " + response + "$");
+            });
+    });
+
+</script>
